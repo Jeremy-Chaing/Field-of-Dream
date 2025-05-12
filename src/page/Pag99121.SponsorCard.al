@@ -1,24 +1,21 @@
-page 99120 SponsorList
+page 99121 SponsorCard
 {
-    ApplicationArea = All;
-    Caption = 'SponsorList';
-    PageType = List;
+    PageType = Card;
     SourceTable = Sponsor;
-    UsageCategory = Lists;
-    CardPageId = SponsorCard;
-    Editable = true;
-    DelayedInsert = true;
+    Caption = 'Sponsor Card';
+    UsageCategory = None;
 
     layout
     {
         area(Content)
         {
-            repeater(General)
+            group(General)
             {
                 field("No."; Rec."No.")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the number of the sponsor.';
+                    Importance = Promoted;
 
                     trigger OnAssistEdit()
                     begin
@@ -30,12 +27,9 @@ page 99120 SponsorList
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the name of the sponsor.';
-                }
-                field("No. Series"; Rec."No. Series")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the number series used for the sponsor.';
-                    Visible = false;
+                    Importance = Promoted;
+                    ShowMandatory = true;
+                    NotBlank = true;
                 }
                 field(Address; Rec.Address)
                 {
@@ -57,6 +51,10 @@ page 99120 SponsorList
                     ApplicationArea = All;
                     ToolTip = 'Specifies whether the sponsor is active.';
                 }
+            }
+
+            group(Details)
+            {
                 field("Sponsorship Level"; Rec."Sponsorship Level")
                 {
                     ApplicationArea = All;
@@ -77,6 +75,10 @@ page 99120 SponsorList
                     ApplicationArea = All;
                     ToolTip = 'Specifies the number of children the sponsor has.';
                 }
+            }
+
+            group(Financial)
+            {
                 field("Total Contribution Amount"; Rec."Total Contribution Amount")
                 {
                     ApplicationArea = All;

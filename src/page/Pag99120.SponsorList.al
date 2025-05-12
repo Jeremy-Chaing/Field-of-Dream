@@ -1,34 +1,35 @@
-page 99121 SponsorCard
+page 99120 SponsorList
 {
-    PageType = Card;
+    ApplicationArea = All;
+    Caption = 'SponsorList';
+    PageType = List;
     SourceTable = Sponsor;
-    Caption = 'Sponsor Card';
-    UsageCategory = None;
+    UsageCategory = Lists;
+    CardPageId = SponsorCard;
+    Editable = true;
+    DelayedInsert = true;
 
     layout
     {
         area(Content)
         {
-            group(General)
+            repeater(General)
             {
                 field("No."; Rec."No.")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the number of the sponsor.';
-                    Importance = Promoted;
-
-                    trigger OnAssistEdit()
-                    begin
-                        if Rec.AssistEdit() then
-                            CurrPage.Update(false);
-                    end;
                 }
                 field(Name; Rec.Name)
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the name of the sponsor.';
-                    Importance = Promoted;
-                    ShowMandatory = true;
+                }
+                field("No. Series"; Rec."No. Series")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the number series used for the sponsor.';
+                    Visible = false;
                 }
                 field(Address; Rec.Address)
                 {
@@ -50,10 +51,6 @@ page 99121 SponsorCard
                     ApplicationArea = All;
                     ToolTip = 'Specifies whether the sponsor is active.';
                 }
-            }
-
-            group(Details)
-            {
                 field("Sponsorship Level"; Rec."Sponsorship Level")
                 {
                     ApplicationArea = All;
@@ -74,10 +71,6 @@ page 99121 SponsorCard
                     ApplicationArea = All;
                     ToolTip = 'Specifies the number of children the sponsor has.';
                 }
-            }
-
-            group(Financial)
-            {
                 field("Total Contribution Amount"; Rec."Total Contribution Amount")
                 {
                     ApplicationArea = All;

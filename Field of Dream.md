@@ -73,17 +73,17 @@ F6 查詢功能：
 
 FlowFields：
 
-- [ ] 每個 Sponsor 都應顯示總承諾金額與總捐款金額
+- [x] 每個 Sponsor 都應顯示總承諾金額與總捐款金額
 
 表單類型：
 
-- [ ] Sponsor 需要卡片（Card）與清單（List）表單
+- [x] Sponsor 需要卡片（Card）與清單（List）表單
 
 - [ ] Team 需要工作表（Worksheet）表單
 
-- [ ] Pledge 和 Contribution 需要 Tabular 表單
+- [x] Pledge 和 Contribution 需要 Tabular 表單
 
-- [ ] 自動編號：Pledge 和 Contribution 需要 AutoSplitKey 屬性來自動產生行號
+- [x] 自動編號：Pledge 和 Contribution 需要 AutoSplitKey 屬性來自動產生行號
 
 分頁連結：
 
@@ -110,7 +110,7 @@ FlowFields：
 ## Precautions
 
 - [X] Make sure to use object numbers in the range 99120 – 99129 for all of the objects.
-- [ ] Table ~~option~~ ==> Enum
+- [x] Table ~~option~~ ==> Enum
 
 ## Extra features
 

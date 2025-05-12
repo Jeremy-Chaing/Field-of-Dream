@@ -11,7 +11,7 @@ table 99120 Sponsor
         {
             Caption = 'Sponsor Number';
             DataClassification = CustomerContent;
-
+            NotBlank = true;
             trigger OnValidate()
             begin
                 if "No." <> xRec."No." then begin
@@ -25,7 +25,6 @@ table 99120 Sponsor
         {
             Caption = 'Sponsor''s Name';
             DataClassification = CustomerContent;
-            NotBlank = true;
 
             trigger OnValidate()
             var
