@@ -3,8 +3,6 @@ table 99120 Sponsor
     Caption = 'Sponsor';
     DataClassification = CustomerContent;
     LookupPageId = SponsorList;
-    DrillDownPageId = SponsorList;
-
     fields
     {
         field(1; "No."; Code[20])
@@ -87,7 +85,16 @@ table 99120 Sponsor
         {
             Caption = 'Sponsor Team';
             DataClassification = CustomerContent;
-            TableRelation = "FOD Team";
+            TableRelation = "FOD Team".Code where("Activated Status" = const(Active));
+
+            trigger OnValidate()
+            begin
+                if "Sponsor Team" <> '' then begin
+                    FODTeam.Get("Sponsor Team");
+                    if not (FODTeam."Activated Status" = FODTeam."Activated Status"::Active) then
+                        Error('Selected team must be active.');
+                end;
+            end;
         }
         field(9; "Marital Status"; Enum "MaritalStatus")
         {
@@ -163,6 +170,7 @@ table 99120 Sponsor
     var
         SalesSetup: Record "Sales & Receivables Setup";
         NoSeriesMgt: Codeunit NoSeriesManagement;
+        FODTeam: Record "FOD Team";
 
     procedure AssistEdit(): Boolean
     begin

@@ -4,6 +4,7 @@ page 99121 SponsorCard
     SourceTable = Sponsor;
     Caption = 'Sponsor Card';
     UsageCategory = None;
+    ApplicationArea = All;
 
     layout
     {
@@ -64,6 +65,8 @@ page 99121 SponsorCard
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the team the sponsor is supporting.';
+                    Lookup = true;
+                    LookupPageId = TeamList;
                 }
                 field("Marital Status"; Rec."Marital Status")
                 {
@@ -89,6 +92,80 @@ page 99121 SponsorCard
                     ApplicationArea = All;
                     ToolTip = 'Specifies the total amount pledged by the sponsor.';
                 }
+            }
+
+            group(Pledges)
+            {
+                part(Pledge; PledgeListPart)
+                {
+                    ApplicationArea = All;
+                    SubPageLink = "Sponsor No." = FIELD("No.");
+                    Caption = 'Pledges for Sponsor';
+                }
+            }
+
+            group(Contributions)
+            {
+                part(Contribution; ContributionListPart)
+                {
+                    ApplicationArea = All;
+                    SubPageLink = "Sponsor No." = FIELD("No.");
+                    Caption = 'Contributions for Sponsor';
+                }
+            }
+
+
+        }
+
+
+    }
+
+    //自行增加按鈕功能新增Pledge和Contribution
+    actions
+    {
+        area(processing)
+        {
+            action(CreateNewPledge)
+            {
+                Caption = 'Create Pledge';
+                ApplicationArea = All;
+                Promoted = true;
+                PromotedCategory = Process;
+
+                trigger OnAction()
+                var
+                    PledgeRec: Record Pledge;
+                begin
+                    PledgeRec.Init();
+                    PledgeRec."Sponsor No." := Rec."No.";
+                    PledgeRec.Insert(true);
+                    CurrPage.Update(false);
+                end;
+            }
+
+            action(CreateNewContribution)
+            {
+                Caption = 'Create Contribution';
+                ApplicationArea = All;
+                Promoted = true;
+                PromotedCategory = Process;
+
+                trigger OnAction()
+                var
+                    ContributionRec: Record Contribution;
+                begin
+                    ContributionRec.Init();
+                    ContributionRec."Sponsor No." := Rec."No.";
+                    ContributionRec.Insert(true);
+                    CurrPage.Update(false);
+                end;
+            }
+
+            action(OpenSponsorList)
+            {
+                Caption = 'Sponsor List (F5)';
+                ApplicationArea = All;
+                RunObject = Page "SponsorList";
             }
         }
     }

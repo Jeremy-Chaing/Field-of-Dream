@@ -69,7 +69,7 @@
 
 F6 查詢功能：
 
-- [ ] Sponsor Team 欄位需要支援 F6 查詢到 Team 表
+- [x] Sponsor Team 欄位需要支援 F6 查詢到 Team 表
 
 FlowFields：
 
@@ -87,13 +87,10 @@ FlowFields：
 
 分頁連結：
 
-- [ ] ~~Sponsor Card 上需要分別加入進入 Pledge 與 Contribution 的按鈕~~ pledge 跟 contribution 改為 sponsor 的明細行顯示在 sponsor card 即可
+- [x] ~~Sponsor Card 上需要分別加入進入 Pledge 與 Contribution 的按鈕~~ pledge 跟 contribution 改為 sponsor 的明細行顯示在 sponsor card 即可
 
 - [ ] Menu Button 需要支援 List (F5) 功能
 
-同步更新：
-
-- [ ] 當切換 Sponsor Card 時，已開啟的 Pledge 和 Contribution 頁面應同步更新
 
 資料匯入：
 

@@ -4,7 +4,9 @@ page 99125 PledgeListPart
     Caption = 'PledgeListPart';
     PageType = ListPart;
     SourceTable = Pledge;
-    
+    AutoSplitKey = true;
+    DelayedInsert = true;
+
     layout
     {
         area(Content)

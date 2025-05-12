@@ -2,7 +2,7 @@ table 99121 "FOD Team"
 {
     Caption = 'Team';
     DataClassification = CustomerContent;
-
+    LookupPageId = TeamList;
     fields
     {
         field(1; "Code"; Code[20])

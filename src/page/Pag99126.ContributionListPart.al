@@ -4,13 +4,23 @@ page 99126 ContributionListPart
     Caption = 'ContributionListPart';
     PageType = ListPart;
     SourceTable = Contribution;
-    
+    AutoSplitKey = true;
+    DelayedInsert = true;
+
     layout
     {
         area(Content)
         {
             repeater(General)
             {
+                field("Line No."; Rec."Line No.")
+                {
+                    ToolTip = 'Specifies the value of the Line No. field.', Comment = '%';
+                }
+                field("Sponsor No."; Rec."Sponsor No.")
+                {
+                    ToolTip = 'Specifies the value of the Sponsor No. field.', Comment = '%';
+                }
                 field("Contribution Amount"; Rec."Contribution Amount")
                 {
                     ToolTip = 'Specifies the value of the Contribution Amount field.', Comment = '%';
@@ -22,14 +32,6 @@ page 99126 ContributionListPart
                 field(Description; Rec.Description)
                 {
                     ToolTip = 'Specifies the value of the Description field.', Comment = '%';
-                }
-                field("Line No."; Rec."Line No.")
-                {
-                    ToolTip = 'Specifies the value of the Line No. field.', Comment = '%';
-                }
-                field("Sponsor No."; Rec."Sponsor No.")
-                {
-                    ToolTip = 'Specifies the value of the Sponsor No. field.', Comment = '%';
                 }
                 field(SystemCreatedAt; Rec.SystemCreatedAt)
                 {
