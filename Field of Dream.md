@@ -81,7 +81,7 @@ FlowFields：
 
 - [x] Sponsor 需要卡片（Card）與清單（List）表單
 
-- [ ] Team 需要工作表（Worksheet）表單
+- [x] Team 需要工作表（Worksheet）表單
 
 - [x] Pledge 和 Contribution 需要 Tabular 表單
 
@@ -91,7 +91,7 @@ FlowFields：
 
 - [x] ~~Sponsor Card 上需要分別加入進入 Pledge 與 Contribution 的按鈕~~ pledge 跟 contribution 改為 sponsor 的明細行顯示在 sponsor card 即可
 
-- [ ] Menu Button 需要支援 List (F5) 功能
+- [x] Menu Button 需要支援 List (F5) 功能
 
 資料匯入：
 
