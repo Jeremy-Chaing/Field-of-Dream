@@ -1,5 +1,7 @@
 # Field of Dream
 
+Field of Dreams Funding (FDF) 是一個非營利組織，負責為青少棒（Little League Baseball）球隊尋找企業或個人贊助者。他們希望使用 Navision Solutions 來管理他們的內部會計及贊助管理系統。
+
 ## confirm
 
 - Worksheet
@@ -90,7 +92,6 @@ FlowFields：
 - [x] ~~Sponsor Card 上需要分別加入進入 Pledge 與 Contribution 的按鈕~~ pledge 跟 contribution 改為 sponsor 的明細行顯示在 sponsor card 即可
 
 - [ ] Menu Button 需要支援 List (F5) 功能
-
 
 資料匯入：
 
