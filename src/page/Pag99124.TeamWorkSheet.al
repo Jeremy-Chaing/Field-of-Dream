@@ -1,62 +1,95 @@
-page 99124 TeamWorkSheet
+page 99124 "TeamWorkSheet"
 {
     ApplicationArea = All;
-    Caption = 'TeamWorkSheet';
-    PageType = Worksheet;
+    Caption = 'Team Work Sheet';
+    PageType = Card;
     SourceTable = "FOD Team";
 
     layout
     {
         area(Content)
         {
-            repeater(General)
+            group(General)
             {
-
                 field("Code"; Rec."Code")
                 {
-                    ToolTip = 'Specifies the value of the Team Code field.', Comment = '%';
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Team Code field.';
                 }
                 field(Name; Rec.Name)
                 {
-                    ToolTip = 'Specifies the value of the Team Name field.', Comment = '%';
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Team Name field.';
                 }
                 field("Manager Code"; Rec."Manager Code")
                 {
-                    ToolTip = 'Specifies the value of the Manager Code field.', Comment = '%';
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Manager Code field.';
                 }
                 field("Manager Name"; Rec."Manager Name")
                 {
-                    ToolTip = 'Specifies the value of the Manager Name field.', Comment = '%';
-                }
-                field("Activated Status"; Rec."Activated Status")
-                {
-                    ToolTip = 'Specifies the value of the Activated Status field.', Comment = '%';
-                }
-                field(SystemCreatedAt; Rec.SystemCreatedAt)
-                {
-                    ToolTip = 'Specifies the value of the SystemCreatedAt field.', Comment = '%';
-                }
-                field(SystemCreatedBy; Rec.SystemCreatedBy)
-                {
-                    ToolTip = 'Specifies the value of the SystemCreatedBy field.', Comment = '%';
-                }
-                field(SystemId; Rec.SystemId)
-                {
-                    ToolTip = 'Specifies the value of the SystemId field.', Comment = '%';
-                }
-                field(SystemModifiedAt; Rec.SystemModifiedAt)
-                {
-                    ToolTip = 'Specifies the value of the SystemModifiedAt field.', Comment = '%';
-                }
-                field(SystemModifiedBy; Rec.SystemModifiedBy)
-                {
-                    ToolTip = 'Specifies the value of the SystemModifiedBy field.', Comment = '%';
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Manager Name field.';
                 }
                 field("Team Colors"; Rec."Team Colors")
                 {
-                    ToolTip = 'Specifies the value of the Team Colors field.', Comment = '%';
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Team Colors field.';
+                }
+                field("Activated Status"; Rec."Activated Status")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Activated Status field.';
+                }
+            }
+            part(RecentGames; "Recent Games ListPart")
+            {
+                ApplicationArea = All;
+                Caption = 'Recent Games';
+                SubPageLink = "Team" = FIELD(Code);
+                UpdatePropagation = SubPart;
+            }
+            group(Statistics)
+            {
+                field(TotalGames; Rec.GetTotalGames())
+                {
+                    ApplicationArea = All;
+                    Caption = 'Total Games';
+                    ToolTip = 'Specifies the total number of games played.';
+                    Editable = false;
+                }
+                field(Wins; Rec.GetWins())
+                {
+                    ApplicationArea = All;
+                    Caption = 'Wins';
+                    ToolTip = 'Specifies the number of games won.';
+                    Editable = false;
+                }
+                field(Losses; Rec.GetLosses())
+                {
+                    ApplicationArea = All;
+                    Caption = 'Losses';
+                    ToolTip = 'Specifies the number of games lost.';
+                    Editable = false;
+                }
+                field(WinningPercentage; Rec.GetWinningPercentage())
+                {
+                    ApplicationArea = All;
+                    Caption = 'Winning Percentage';
+                    ToolTip = 'Specifies the winning percentage.';
+                    Editable = false;
                 }
             }
         }
     }
+
+    trigger OnAfterGetRecord()
+    begin
+        CurrPage.RecentGames.Page.SetTeam(Rec.Code);
+    end;
+
+    trigger OnOpenPage()
+    begin
+        CurrPage.RecentGames.Page.SetTeam(Rec.Code);
+    end;
 }

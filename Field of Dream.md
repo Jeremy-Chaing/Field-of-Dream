@@ -95,7 +95,7 @@ FlowFields：
 
 資料匯入：
 
-- [ ] ~~使用 Dataport 匯入 Team 和 Sponsor 資料~~ ==> import 改為用 processing only report吃 excel 檔案, 要能匯入 sponsor/team 的基本資料寫成一支或兩支都可以 (processing only report 是 report 物件, property 有一個 processing only 設為 true 即可)
+- [x] ~~使用 Dataport 匯入 Team 和 Sponsor 資料~~ ==> import 改為用 processing only report吃 excel 檔案, 要能匯入 sponsor/team 的基本資料寫成一支或兩支都可以 (processing only report 是 report 物件, property 有一個 processing only 設為 true 即可)
 
 資料來源為 TEAM.TXT（Comma-delimited）
 

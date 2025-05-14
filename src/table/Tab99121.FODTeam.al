@@ -51,4 +51,47 @@ table 99121 "FOD Team"
             Clustered = true;
         }
     }
+
+    procedure GetTotalGames(): Integer
+    var
+        GameResult: Record "Game Result";
+        TotalGames: Integer;
+    begin
+        GameResult.SetRange(Team, Rec.Code);
+        TotalGames := GameResult.Count;
+        exit(TotalGames);
+    end;
+
+    procedure GetWins(): Integer
+    var
+        GameHeader: Record "Game Header";
+        TotalWins: Integer;
+    begin
+        GameHeader.SetRange("Win Team", Rec.Code);
+        TotalWins := GameHeader.Count;
+        exit(TotalWins);
+    end;
+
+    procedure GetLosses(): Integer
+    var
+        GameHeader: Record "Game Header";
+        TotalLosses: Integer;
+    begin
+        GameHeader.SetRange("Lose Team", Rec.Code);
+        TotalLosses := GameHeader.Count;
+        exit(TotalLosses);
+    end;
+
+    procedure GetWinningPercentage(): Decimal
+    var
+        TotalGames: Integer;
+        Wins: Integer;
+    begin
+        TotalGames := GetTotalGames();
+        if TotalGames = 0 then
+            exit(0);
+
+        Wins := GetWins();
+        exit(Round(Wins / TotalGames * 100, 0.01));
+    end;
 }

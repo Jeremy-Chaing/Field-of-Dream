@@ -1,4 +1,4 @@
-report 99121 "Import Sponsor Team Data New"
+report 99121 "Import Sponsor Team Data"
 {
     Caption = 'Import Sponsor and Team Data';
     ProcessingOnly = true;

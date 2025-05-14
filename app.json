@@ -2,7 +2,7 @@
   "id": "9da879b7-258c-414f-b934-a83c8fe14998",
   "name": "Field of Dream",
   "publisher": "Default Publisher",
-  "version": "1.0.0.1",
+  "version": "1.0.0.3",
   "brief": "",
   "description": "",
   "privacyStatement": "",
@@ -18,7 +18,7 @@
   "idRanges": [
     {
       "from": 99120,
-      "to": 99129
+      "to": 99150
     }
   ],
   "resourceExposurePolicy": {
