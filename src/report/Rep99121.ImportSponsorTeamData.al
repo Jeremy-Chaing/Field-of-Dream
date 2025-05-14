@@ -58,7 +58,7 @@ report 99121 "Import Sponsor Team Data New"
         ProgressDialog: Dialog;
         ProgressMsg: Label '正在處理第 #1## 列...';
         TotalRows: Integer;
-        DebugMsg: Label '處理第 %1 列，團隊代碼: %2，團隊名稱: %3', Comment = '%1 = Row No, %2 = Team Code, %3 = Team Name';
+    //DebugMsg: Label '處理第 %1 列，團隊代碼: %2，團隊名稱: %3', Comment = '%1 = Row No, %2 = Team Code, %3 = Team Name';
 
     local procedure ImportExcelData()
     begin
@@ -112,6 +112,7 @@ report 99121 "Import Sponsor Team Data New"
         ManagerCode: Code[20];
         RowNo: Integer;
         ErrorOccurred: Boolean;
+        TempLocation: Record "FOD Team";
     begin
         // 遍歷每一列
         for RowNo := 2 to TotalRows do begin  // 從第2列開始（跳過標題）
@@ -121,7 +122,7 @@ report 99121 "Import Sponsor Team Data New"
             TeamCode := GetValueAtCell(RowNo, 1);  // A欄：團隊代碼
             TeamName := GetValueAtCell(RowNo, 2);  // B欄：團隊名稱
 
-            Message(DebugMsg, RowNo, TeamCode, TeamName);
+            //Message(DebugMsg, RowNo, TeamCode, TeamName);
 
             if TeamCode <> '' then begin
                 // 讀取Excel資料
@@ -139,24 +140,22 @@ report 99121 "Import Sponsor Team Data New"
                 end;
 
                 if not ErrorOccurred then begin
-                    // 檢查團隊是否已存在
-                    FODTeamRec.Reset();
-                    FODTeamRec.SetRange(Code, TeamCode);
-                    if FODTeamRec.FindFirst() then begin
-                        Message(DuplicateTeamErr, TeamCode);
-                        SkippedCount += 1;
-                    end else begin
-                        // 建立團隊記錄
+                    // 使用Get方法檢查團隊是否存在
+                    TempLocation := FODTeamRec;
+                    if not FODTeamRec.Get(TeamCode) then begin
+                        // 如果不存在，則新增記錄
                         FODTeamRec.Init();
                         FODTeamRec.Validate(Code, TeamCode);
-                        FODTeamRec.Validate(Name, TeamName);
-                        FODTeamRec.Validate("Manager Code", ManagerCode);
-                        FODTeamRec.Validate("Team Colors", TeamColors);
-                        FODTeamRec.Validate("Activated Status", FODTeamRec."Activated Status"::Active);  // 預設為啟用
-
-                        if FODTeamRec.Insert(true) then
-                            TeamCount += 1;
+                        FODTeamRec.Insert(true);
+                        TeamCount += 1;
                     end;
+
+                    // 無論是新增還是修改，都更新其他欄位
+                    FODTeamRec.Validate(Name, TeamName);
+                    FODTeamRec.Validate("Manager Code", ManagerCode);
+                    FODTeamRec.Validate("Team Colors", TeamColors);
+                    FODTeamRec.Validate("Activated Status", FODTeamRec."Activated Status"::Active);
+                    FODTeamRec.Modify(true);
                 end;
             end;
         end;
@@ -174,58 +173,67 @@ report 99121 "Import Sponsor Team Data New"
         JoinDate: Date;
         MaritalStatus: Option " ",Single,Married,Divorced,Widowed;
         NumberOfChildren: Integer;
-        RecordCount: Integer;
+        RowNo: Integer;
+        ErrorOccurred: Boolean;
+        TempLocation: Record Sponsor;
     begin
-        ExcelBuffer.Reset();
-        if ExcelBuffer.FindSet() then
-            repeat
-                RecordCount += 1;
-                ProgressDialog.Update(1, RecordCount);
+        // 遍歷每一列
+        for RowNo := 2 to TotalRows do begin  // 從第2列開始（跳過標題）
+            Clear(ErrorOccurred);
+            ProgressDialog.Update(1, RowNo);
 
-                if ExcelBuffer."Row No." > 1 then begin  // 跳過標題列
-                    Clear(SponsorRec);
-                    SponsorNo := GetValueAtCell(ExcelBuffer."Row No.", 1);  // A欄：贊助商編號
+            SponsorNo := GetValueAtCell(RowNo, 1);  // A欄：贊助商編號
+            SponsorName := GetValueAtCell(RowNo, 2);  // B欄：贊助商名稱
 
-                    if SponsorNo <> '' then begin
-                        // 讀取Excel資料
-                        SponsorName := GetValueAtCell(ExcelBuffer."Row No.", 2);  // B欄：贊助商名稱
-                        TeamCode := GetValueAtCell(ExcelBuffer."Row No.", 3);  // C欄：團隊代碼
-                        Evaluate(SponsorshipLevel, GetValueAtCell(ExcelBuffer."Row No.", 4));  // D欄：贊助等級
-                        Address := GetValueAtCell(ExcelBuffer."Row No.", 5);  // E欄：地址
-                        Address2 := GetValueAtCell(ExcelBuffer."Row No.", 6);  // F欄：地址2
-                        Evaluate(ActiveStatus, GetValueAtCell(ExcelBuffer."Row No.", 7));  // G欄：啟用狀態
-                        Evaluate(JoinDate, GetValueAtCell(ExcelBuffer."Row No.", 8));  // H欄：加入日期
-                        Evaluate(MaritalStatus, GetValueAtCell(ExcelBuffer."Row No.", 9));  // I欄：婚姻狀態
-                        Evaluate(NumberOfChildren, GetValueAtCell(ExcelBuffer."Row No.", 10));  // J欄：子女數量
+            //Message(DebugMsg, RowNo, SponsorNo, SponsorName);
 
-                        // 驗證團隊是否存在
-                        if TeamCode <> '' then begin
-                            FODTeamRec.Reset();
-                            FODTeamRec.SetRange(Code, TeamCode);
-                            if not FODTeamRec.FindFirst() then
-                                Error(NoTeamErr, TeamCode);
-                        end;
+            if SponsorNo <> '' then begin
+                // 讀取Excel資料
+                TeamCode := GetValueAtCell(RowNo, 3);  // C欄：團隊代碼
+                Evaluate(SponsorshipLevel, GetValueAtCell(RowNo, 4));  // D欄：贊助等級
+                Address := GetValueAtCell(RowNo, 5);  // E欄：地址
+                Address2 := GetValueAtCell(RowNo, 6);  // F欄：地址2
+                Evaluate(ActiveStatus, GetValueAtCell(RowNo, 7));  // G欄：啟用狀態
+                Evaluate(JoinDate, GetValueAtCell(RowNo, 8));  // H欄：加入日期
+                Evaluate(MaritalStatus, GetValueAtCell(RowNo, 9));  // I欄：婚姻狀態
+                Evaluate(NumberOfChildren, GetValueAtCell(RowNo, 10));  // J欄：子女數量
 
-                        // 建立贊助商記錄
-                        SponsorRec.Init();
-                        SponsorRec.Validate("No.", SponsorNo);
-                        SponsorRec.Validate(Name, SponsorName);
-                        SponsorRec.Validate("Sponsor Team", TeamCode);
-                        SponsorRec.Validate("Sponsorship Level", SponsorshipLevel);
-                        SponsorRec.Validate(Address, Address);
-                        SponsorRec.Validate("Address 2", Address2);
-                        SponsorRec.Validate("Active Status", ActiveStatus);
-                        SponsorRec.Validate("Join Date", JoinDate);
-                        SponsorRec.Validate("Marital Status", MaritalStatus);
-                        SponsorRec.Validate("Number of Children", NumberOfChildren);
-
-                        if not SponsorRec.Insert(true) then
-                            Error(DuplicateSponsorErr, SponsorNo);
-
-                        SponsorCount += 1;
+                // 驗證團隊是否存在
+                if TeamCode <> '' then begin
+                    FODTeamRec.Reset();
+                    FODTeamRec.SetRange(Code, TeamCode);
+                    FODTeamRec.SetRange("Activated Status", FODTeamRec."Activated Status"::Active);
+                    if not FODTeamRec.FindFirst() then begin
+                        Message(NoTeamErr, TeamCode);
+                        ErrorOccurred := true;
                     end;
                 end;
-            until ExcelBuffer.Next() = 0;
+
+                if not ErrorOccurred then begin
+                    // 使用Get方法檢查贊助商是否存在
+                    TempLocation := SponsorRec;
+                    if not SponsorRec.Get(SponsorNo) then begin
+                        // 如果不存在，則新增記錄
+                        SponsorRec.Init();
+                        SponsorRec.Validate("No.", SponsorNo);
+                        SponsorRec.Insert(true);
+                        SponsorCount += 1;
+                    end;
+
+                    // 無論是新增還是修改，都更新其他欄位
+                    SponsorRec.Validate(Name, SponsorName);
+                    SponsorRec.Validate("Sponsor Team", TeamCode);
+                    SponsorRec.Validate("Sponsorship Level", SponsorshipLevel);
+                    SponsorRec.Validate(Address, Address);
+                    SponsorRec.Validate("Address 2", Address2);
+                    SponsorRec.Validate("Active Status", ActiveStatus);
+                    SponsorRec.Validate("Join Date", JoinDate);
+                    SponsorRec.Validate("Marital Status", MaritalStatus);
+                    SponsorRec.Validate("Number of Children", NumberOfChildren);
+                    SponsorRec.Modify(true);
+                end;
+            end;
+        end;
     end;
 
     local procedure GetValueAtCell(RowNo: Integer; ColNo: Integer): Text
