@@ -112,9 +112,8 @@ FlowFields：
 
 ## Extra features
 
-- 戰績追蹤
+- [x] 戰績追蹤
   - 於Team card 畫面用ListPart做一個Subform顯示球隊近五場比賽結果及目前排名
   
-- 球季比賽結果table
+- [x] 球季比賽結果table
   - 有戰績追蹤勢必就需要一個比賽結果總表table 但僅於 Team card 畫面顯示近五場之比賽結果
-  - Column: Game No., Season, Home team, Guest team, Home point, Guest point, Date, Win Team, Lose team
