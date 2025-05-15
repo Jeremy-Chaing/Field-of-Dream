@@ -10,6 +10,7 @@ table 99120 Sponsor
             Caption = 'Sponsor Number';
             DataClassification = CustomerContent;
             NotBlank = true;
+            Editable = false;
             trigger OnValidate()
             begin
                 if "No." <> xRec."No." then begin

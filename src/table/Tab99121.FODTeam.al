@@ -10,12 +10,14 @@ table 99121 "FOD Team"
             Caption = 'Team Code';
             DataClassification = CustomerContent;
             NotBlank = true;
+            Editable = false;
         }
         field(2; "Name"; Text[100])
         {
             Caption = 'Team Name';
             DataClassification = CustomerContent;
             NotBlank = true;
+            Editable = false;
         }
         field(3; "Team Colors"; Text[100])
         {

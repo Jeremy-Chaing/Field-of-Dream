@@ -40,17 +40,4 @@ table 99123 Contribution
             Clustered = true;
         }
     }
-
-    trigger OnInsert()
-    var
-        Contribution: Record Contribution;
-    begin
-        if "Line No." = 0 then begin
-            Contribution.SetRange("Sponsor No.", "Sponsor No.");
-            if Contribution.FindLast() then
-                "Line No." := Contribution."Line No." + 10
-            else
-                "Line No." := 10;
-        end;
-    end;
 }

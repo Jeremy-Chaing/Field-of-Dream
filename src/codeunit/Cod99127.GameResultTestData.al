@@ -50,7 +50,7 @@ codeunit 99127 "Game Result Test Data"
                     InsertGame(
                         GameHeader,
                         GameResult,
-                        Format(GameNo, 4, '<Integer,4><Character,3>'),
+                        Format(GameNo, 4, '0000'),
                         2024,
                         GameDate,
                         HomeTeam,

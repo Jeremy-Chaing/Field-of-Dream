@@ -15,7 +15,6 @@ table 99122 Pledge
         {
             Caption = 'Line No.';
             DataClassification = CustomerContent;
-            AutoIncrement = true;
         }
         field(3; "Pledge Date"; Date)
         {
@@ -43,4 +42,17 @@ table 99122 Pledge
             Clustered = true;
         }
     }
+
+    trigger OnInsert()
+    var
+        Pledge: Record Pledge;
+    begin
+        if "Line No." = 0 then begin
+            Pledge.SetRange("Sponsor No.", "Sponsor No.");
+            if Pledge.FindLast() then
+                "Line No." := Pledge."Line No." + 10000
+            else
+                "Line No." := 10000;
+        end;
+    end;
 }

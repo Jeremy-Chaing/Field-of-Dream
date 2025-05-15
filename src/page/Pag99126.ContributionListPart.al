@@ -1,7 +1,7 @@
 page 99126 ContributionListPart
 {
     ApplicationArea = All;
-    Caption = 'ContributionListPart';
+    Caption = 'Contributions';
     PageType = ListPart;
     SourceTable = Contribution;
     AutoSplitKey = true;
@@ -15,23 +15,28 @@ page 99126 ContributionListPart
             {
                 field("Line No."; Rec."Line No.")
                 {
-                    ToolTip = 'Specifies the value of the Line No. field.', Comment = '%';
+                    ApplicationArea = All;
+                    Visible = false;
                 }
                 field("Sponsor No."; Rec."Sponsor No.")
                 {
                     ToolTip = 'Specifies the value of the Sponsor No. field.', Comment = '%';
+                    Visible = false;
                 }
                 field("Contribution Amount"; Rec."Contribution Amount")
                 {
-                    ToolTip = 'Specifies the value of the Contribution Amount field.', Comment = '%';
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the contribution amount.';
                 }
                 field("Contribution Date"; Rec."Contribution Date")
                 {
-                    ToolTip = 'Specifies the value of the Contribution Date field.', Comment = '%';
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the contribution date.';
                 }
                 field(Description; Rec.Description)
                 {
-                    ToolTip = 'Specifies the value of the Description field.', Comment = '%';
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the description of the contribution.';
                 }
                 field(SystemCreatedAt; Rec.SystemCreatedAt)
                 {

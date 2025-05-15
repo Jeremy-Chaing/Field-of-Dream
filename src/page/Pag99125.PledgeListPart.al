@@ -1,7 +1,7 @@
 page 99125 PledgeListPart
 {
     ApplicationArea = All;
-    Caption = 'PledgeListPart';
+    Caption = 'Pledges';
     PageType = ListPart;
     SourceTable = Pledge;
     AutoSplitKey = true;
@@ -15,19 +15,23 @@ page 99125 PledgeListPart
             {
                 field("Line No."; Rec."Line No.")
                 {
-                    ToolTip = 'Specifies the value of the Line No. field.', Comment = '%';
+                    ApplicationArea = All;
+                    Visible = false;
                 }
                 field("Pledge Amount"; Rec."Pledge Amount")
                 {
-                    ToolTip = 'Specifies the value of the Pledge Amount field.', Comment = '%';
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the pledge amount.';
                 }
                 field("Pledge Date"; Rec."Pledge Date")
                 {
-                    ToolTip = 'Specifies the value of the Pledge Date field.', Comment = '%';
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the pledge date.';
                 }
                 field("Sponsor No."; Rec."Sponsor No.")
                 {
                     ToolTip = 'Specifies the value of the Sponsor No. field.', Comment = '%';
+                    Visible = false;
                 }
                 field(SystemCreatedAt; Rec.SystemCreatedAt)
                 {
